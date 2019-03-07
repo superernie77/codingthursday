@@ -12,8 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
-public class DemoProjectApplication extends WebMvcConfigurationSupport {
+public class DemoProjectApplication  {
 
 //	@Bean
 //	public Docket productApi() {
@@ -29,8 +28,8 @@ public class DemoProjectApplication extends WebMvcConfigurationSupport {
 //		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 //	}
 //
-//	public static void main(String[] args) {
-//		SpringApplication.run(DemoProjectApplication.class, args);
-//	}
+	public static void main(String[] args) {
+		SpringApplication.run(DemoProjectApplication.class, args);
+	}
 
 }
