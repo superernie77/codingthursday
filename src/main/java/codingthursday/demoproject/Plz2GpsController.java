@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Plz2GpsController {
 	
+	@Value("classpath:AT.txt")
+	private Resource resource;
+	
+	
 	private Map<String, List<String>> data = new HashMap<>(); 
 	
 	@PostConstruct
 	public void setup() throws IOException {
-		Resource resource = new ClassPathResource("./AT.txt");
-		File file  = resource.getFile();
 		
-		Scanner sc =new Scanner(new FileReader(file));
+		Scanner sc =new Scanner(resource.getInputStream());
 		sc.useDelimiter("\r");
 	        String line = sc.next();
 	         String[] result = line.split("\t");
@@ -39,7 +42,8 @@ public class Plz2GpsController {
 		         coordinates.add(result[9+i]);
 		         coordinates.add(result[10+i]);
 		         data.put(result[1+i], coordinates);	 
-	         }         
+	         }   
+	         sc.close();
 	}
 	
 	@RequestMapping(value="/plz2gps/{plz}", method = RequestMethod.GET)
