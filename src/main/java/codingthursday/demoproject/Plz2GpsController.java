@@ -29,21 +29,29 @@ public class Plz2GpsController {
 	
 	private Map<String, List<String>> data = new HashMap<>(); 
 	
+	/**
+	 * Reads the Postalcode GPS data from the file AT.txt
+	 * Only containe austrian postal codes and gps cordinates.
+	 * @throws IOException
+	 */
 	@PostConstruct
 	public void setup() throws IOException {
 		
 		Scanner sc =new Scanner(resource.getInputStream());
 		sc.useDelimiter("\r");
-	        String line = sc.next();
+		while( sc.hasNext() ) {
+			 String line = sc.next();
 	         String[] result = line.split("\t");
 	         for (int i = 0 ; i < result.length ; i = i + 11) {
+	        	 if (9+i > result.length) break;
 	        	 List<String> coordinates = new ArrayList<>();
-	        	 if (9+i > result.length) return;
 		         coordinates.add(result[9+i]);
 		         coordinates.add(result[10+i]);
 		         data.put(result[1+i], coordinates);	 
 	         }   
-	         sc.close();
+		}
+		sc.close();
+	        
 	}
 	
 	@RequestMapping(value="/plz2gps/{plz}", method = RequestMethod.GET)
