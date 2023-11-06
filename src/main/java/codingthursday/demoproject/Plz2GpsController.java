@@ -1,24 +1,21 @@
 package codingthursday.demoproject;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.annotation.PostConstruct;
 
 @RestController
 public class Plz2GpsController {
@@ -56,7 +53,12 @@ public class Plz2GpsController {
 	
 	@RequestMapping(value="/plz2gps/{plz}", method = RequestMethod.GET)
 	public List<String> postleitzahl2gps (@PathVariable("plz") String plz ) {
-		return data.get(plz);
+		
+		List<String> result = data.get(plz);
+		
+		System.out.println("PLZ is "+plz+" GPS coordinate is "+result);
+		
+		return result;
 	}
 
 }
